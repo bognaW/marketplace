@@ -4,6 +4,8 @@ import {toast} from 'react-toastify'
 
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth'
 
+import OAuth from '../components/OAuth'
+
 import {ReactComponent as ArrowRightIcon} from '../assets/svg/keyboardArrowRightIcon.svg'
 import visibilityIcon from '../assets/svg/visibilityIcon.svg'
 
@@ -73,7 +75,7 @@ function SignIn() {
             />
           </div>
           <Link 
-            to='/forgot-password'
+            to='/frogot-password'
             className='forgotPasswordLink'
           >
             Forgot Password
@@ -91,7 +93,7 @@ function SignIn() {
             </button>
           </div>
         </form>
-        {/* Google OAuth component */}
+        <OAuth />
 
         <Link 
           to='/sign-up'
