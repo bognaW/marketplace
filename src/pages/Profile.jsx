@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import { toast } from 'react-toastify'
 
+import ListingItem from '../components/ListingItem'
+
 import { getAuth, updateProfile } from 'firebase/auth'
 import {
 	doc,
@@ -17,11 +19,12 @@ import { db } from '../firebase.config'
 
 import arrowRight from '../assets/svg/keyboardArrowRightIcon.svg'
 import homeIcon from '../assets/svg/homeIcon.svg'
+import { async } from '@firebase/util'
 
 function Profile() {
 	const auth = getAuth()
-  const [loading, setLoading] = useState(true)
-  const [listings, setListings] = useState(null)
+	const [loading, setLoading] = useState(true)
+	const [listings, setListings] = useState(null)
 	const [changeDeteils, setChangeDetails] = useState(false)
 	const [formData, setFormData] = useState({
 		name: auth.currentUser.displayName,
@@ -53,13 +56,13 @@ function Profile() {
 				})
 			})
 
-      console.log(listings);
+			console.log(listings)
 
-      setListings(listings)
-      setLoading(false)
+			setListings(listings)
+			setLoading(false)
 		}
 
-    fetchUserListings()
+		fetchUserListings()
 	}, [auth.currentUser.uid])
 
 	const onLogout = () => {
@@ -92,6 +95,18 @@ function Profile() {
 			[e.target.id]: e.target.value,
 		}))
 	}
+
+	const onDelete = async (listingId) => {
+		if (window.confirm('Are you sure you want to delete?')) {
+			await deleteDoc(doc(db, 'listings', listingId))
+
+			const updateListings = listings.filter((listing) => listing.id !== listingId)
+			setListings(updateListings)
+			toast.success('Successfully deleted listing')
+		}
+	}
+
+	const onEdit = (listingId) => navigate(`/edit-listing/${listingId}`)
 
 	return (
 		<div className='profile'>
@@ -139,6 +154,22 @@ function Profile() {
 					<p>Sell or rent your home</p>
 					<img src={arrowRight} alt='arrow right' />
 				</Link>
+				{!loading && listings?.length > 0 && (
+					<>
+						<p className='listingsText'>Your Listings</p>
+						<ul className='listingsList'>
+							{listings.map((listing) => (
+								<ListingItem
+									key={listing.id}
+									listing={listing.data}
+									id={listing.id}
+									onDelete={() => onDelete(listing.id)}
+									onEdit={() => onEdit(listing.id)}
+								/>
+							))}
+						</ul>
+					</>
+				)}
 			</main>
 		</div>
 	)

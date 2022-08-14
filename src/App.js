@@ -6,6 +6,7 @@ import Category from './pages/Category'
 import Contact from './pages/Contact'
 import CreateListing from './pages/CreateListing'
 import Explore from './pages/Explore'
+import EditListing from './pages/EditListing'
 import ForgotPassword from './pages/ForgotPassword'
 import Listing from './pages/Listing'
 import Navbar from './components/Navbar'
@@ -30,6 +31,7 @@ function App() {
 					<Route path='/sign-up' element={<SignUp />} />
 					<Route path='/frogot-password' element={<ForgotPassword />} />
 					<Route path='/create-listing' element={<CreateListing />} />
+					<Route path='/edit-listing/:ListingId' element={<EditListing />} />
 					<Route
 						path='/category/:categoryName/:ListingId'
 						element={<Listing />}
