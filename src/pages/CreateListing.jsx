@@ -15,6 +15,7 @@ import { v4 as uuidv4 } from 'uuid'
 import Spinner from '../components/Spinner'
 
 function CreateListing() {
+	// eslint-disable-next-line
 	const [geolocationEnabled, setGeolocationEnabled] = useState(true)
 	const [loading, setLoading] = useState(false)
 	const [formData, setFormData] = useState({
@@ -87,7 +88,7 @@ function CreateListing() {
 		}
 
 		let geolocation = {}
-		let location
+		// let location
 
 		if (geolocationEnabled) {
 			const response = await fetch(
@@ -99,10 +100,10 @@ function CreateListing() {
 			geolocation.lat = data.results[0]?.geometry.location.lat ?? 0
 			geolocation.lng = data.results[0]?.geometry.location.lng ?? 0
 
-			location =
-				data.status === 'ZERO_RESULTS'
-					? undefined
-					: data.results[0]?.formatted_address
+			// location =
+			// 	data.status === 'ZERO_RESULTS'
+			// 		? undefined
+			// 		: data.results[0]?.formatted_address
 
 			// if (location === undefined || location.includes('undefined')) {
 			//   setLoading(false)
@@ -136,6 +137,8 @@ function CreateListing() {
 								break
 							case 'running':
 								console.log('Upload is running')
+								break
+							default:
 								break
 						}
 					},

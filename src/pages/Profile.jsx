@@ -19,7 +19,6 @@ import { db } from '../firebase.config'
 
 import arrowRight from '../assets/svg/keyboardArrowRightIcon.svg'
 import homeIcon from '../assets/svg/homeIcon.svg'
-import { async } from '@firebase/util'
 
 function Profile() {
 	const auth = getAuth()
@@ -55,8 +54,6 @@ function Profile() {
 					data: doc.data(),
 				})
 			})
-
-			console.log(listings)
 
 			setListings(listings)
 			setLoading(false)
